@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React , {useEffect, useState}from 'react'
+import { BrowserRouter } from 'react-router-dom'
+import {ThemeProvider} from "@material-ui/core/styles";
+import theme from './theme'
+
 
 function App() {
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    fetch('https://gitconnected.com/v1/portfolio/mprabu0104')
+    .then( response => response.json())
+    .then( user => setUser(user))
+  }, [])
+
+  console.log(user, "user")
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <ThemeProvider theme={theme}>
+      </ThemeProvider></BrowserRouter>
   );
 }
 
